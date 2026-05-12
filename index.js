@@ -5,6 +5,7 @@ const {
     Events,
     EmbedBuilder
 } = require("discord.js");
+const { addLog } = require('./google');
 
 const fs = require("fs");
 require("dotenv").config();
@@ -56,6 +57,8 @@ const financeReasons = [
     "Продажа сено",
     "Продажа лекарство",
     "Продажа Хороший корм",
+    "Продажа Средний корм",
+    "Продажа Обычный корм",
     "Продажа лошади",
     "Закупка сырья",
     "Зарплаты / Премий",
@@ -233,13 +236,18 @@ client.on(Events.InteractionCreate, async interaction => {
     // =========================
 
     if (interaction.commandName === "sklad") {
-
         const action = interaction.options.getString("action");
         const item = interaction.options.getString("item");
         const amount = interaction.options.getInteger("amount");
              const comment =
-            interaction.options.getString("comment") || ".";
+            interaction.options.getString("comment") || "";
 
+        await addLog(
+        interaction.user.username,
+        action,
+        item,
+        amount
+    );
 
         const inventory = loadInventory();
 
