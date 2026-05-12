@@ -210,7 +210,7 @@ const financeCommand = new SlashCommandBuilder()
 
 client.once(Events.ClientReady, async () => {
 
-    console.log(`Бот включился как ${client.user.tag}`);
+    //console.log(`Бот включился как ${client.user.tag}`);
 
     await client.application.commands.set([
         skladCommand,
@@ -218,7 +218,7 @@ client.once(Events.ClientReady, async () => {
         financeCommand
     ]);
 
-    console.log("все command работуют.");
+    //console.log("все command работуют.");
 });
 
 
@@ -236,6 +236,7 @@ client.on(Events.InteractionCreate, async interaction => {
     // =========================
 
     if (interaction.commandName === "sklad") {
+        await interaction.deferReply();
         const action = interaction.options.getString("action");
         const item = interaction.options.getString("item");
         const amount = interaction.options.getInteger("amount");
@@ -277,7 +278,7 @@ client.on(Events.InteractionCreate, async interaction => {
             .setTimestamp();
 
 
-        await interaction.reply({
+        await interaction.editReply({
             embeds: [embed]
         });
     }
@@ -309,7 +310,7 @@ client.on(Events.InteractionCreate, async interaction => {
             .setTimestamp();
 
 
-        await interaction.reply({
+        await interaction.editReply({
             embeds: [embed]
         });
     }
@@ -325,7 +326,7 @@ client.on(Events.InteractionCreate, async interaction => {
         const amount = interaction.options.getInteger("amount");
         const reason = interaction.options.getString("reason");
         const comment =
-            interaction.options.getString("comment") || "Количество";
+            interaction.options.getString("comment") || "";
 
 
 
